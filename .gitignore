@@ -1,0 +1,11 @@
+# Ignore logs
+nmap_defender.log
+
+# Ignore compiled Python files
+*.pyc
+
+# Ignore virtual environment
+venv/
+
+# Ignore dependencies
+requirements.txt
