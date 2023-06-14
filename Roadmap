@@ -14,3 +14,75 @@
 
     Deploy the web application: Choose a deployment platform (e.g., a cloud service provider or your own server) and deploy the web application so that it can be accessed by users.
     
+    
+    If you choose to use Flask as the web framework, here's a high-level overview of how you can design the user interface for the Nmap Defender web application using Flask and HTML templates:
+
+    Install Flask: Start by installing Flask using pip, the Python package manager. Run the following command in your terminal:
+
+pip install flask
+
+Create a Flask application: Set up the basic structure of your Flask application. Create a Python file (e.g., app.py) and import the necessary modules:
+
+python
+
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+Define routes and views: Define the routes that will handle user requests and render the appropriate HTML templates. For example, you can have a route for the main menu and another route to handle IP whitelisting:
+
+python
+
+@app.route('/')
+def main_menu():
+    return render_template('menu.html')
+
+@app.route('/whitelist', methods=['GET', 'POST'])
+def whitelist():
+    if request.method == 'POST':
+        # Process the form submission
+        ip_address = request.form.get('ip_address')
+        # Call the corresponding function from your script to whitelist the IP address
+        whitelist_ip_address(ip_address)
+        # Display a success message
+        return render_template('whitelist_success.html')
+    # If it's a GET request, display the IP whitelist form
+    return render_template('whitelist_form.html')
+
+Create HTML templates: Create HTML templates that will be rendered by Flask to display the user interface. You can use tools like Bootstrap or CSS frameworks to style your templates. For example, create menu.html, whitelist_form.html, and whitelist_success.html in a templates folder:
+
+    menu.html: Display the main menu with options and links to different functionalities.
+    whitelist_form.html: Provide a form for users to enter the IP address they want to whitelist.
+    whitelist_success.html: Show a success message after the IP address is successfully whitelisted.
+
+Here's an example of whitelist_form.html:
+
+html
+
+<h1>Whitelist IP Address</h1>
+<form method="POST" action="{{ url_for('whitelist') }}">
+    <label for="ip_address">IP Address:</label>
+    <input type="text" id="ip_address" name="ip_address">
+    <button type="submit">Whitelist</button>
+</form>
+
+Static files: If you have any static assets like CSS stylesheets or JavaScript files, you can store them in a static folder and link to them in your HTML templates. For example, you can create a style.css file in a static/css folder and link it in your templates like this:
+
+html
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+Run the Flask application: Add the following code at the end of your Python file to run the Flask application locally:
+
+python
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+Test the application: Start the Flask development server by running the Python file:
+
+    python app.py
+
+    Access the application in your web browser at http://localhost:5000/ (or the URL displayed in the terminal).
+
+This is a basic outline to get you started with designing the user interface for the Nmap Defender web application using Flask and HTML templates
